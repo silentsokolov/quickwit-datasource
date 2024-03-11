@@ -161,10 +161,7 @@ export class BaseQuickwitDataSource
   }
 
   getFields(spec: FieldCapsSpec={}, range = getDefaultTimeRange()): Observable<MetricFindValue[]> {
-    return from(this.getResource('_elastic/' + this.index + '/_field_caps', {
-      start_timestamp: Math.floor(range.from.valueOf()/SECOND),
-      end_timestamp: Math.ceil(range.to.valueOf()/SECOND),
-    })).pipe(
+    return from(this.getResource('_elastic/' + this.index + '/_field_caps', {})).pipe(
       map((field_capabilities_response: FieldCapabilitiesResponse) => {
         const shouldAddField = (field: any) => {
           if (spec.aggregatable !== undefined && field.aggregatable !== spec.aggregatable) {
